@@ -1,5 +1,6 @@
-import { Component, OnInit, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
+import { RecipeService } from '../recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -8,20 +9,14 @@ import { Recipe } from '../recipe.model';
 })
 export class RecipeListComponent implements OnInit {
  
-  @Output() recipeWasSelected = new EventEmitter<Recipe>();
-  recipes: Recipe[] = [
-    new Recipe('A test recipe', 'This is simpy a test', 'https://www.maxpremiumburgers.pl/contentassets/afbe9c5a892c41eab3b70841e9e342bd/product_cheeseburger.jpg' ),
-    new Recipe('Next test recipe', 'Anoother test', 'https://www.maxpremiumburgers.pl/contentassets/afbe9c5a892c41eab3b70841e9e342bd/product_cheeseburger.jpg' )
-  ];
+  recipes: Recipe[];
   
 
-  constructor() { }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
+    this.recipes = this.recipeService.getRecipes();
   }
 
-  onRecipeSelected(recipe: Recipe){
-    this.recipeWasSelected.emit(recipe);
-  }
 
 }
