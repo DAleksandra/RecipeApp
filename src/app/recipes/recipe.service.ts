@@ -8,18 +8,7 @@ import { Subject } from 'rxjs';
 @Injectable()
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
-    private recipes: Recipe[] = [
-        new Recipe('Schnitzel', 
-        'This is simpy a test', 
-        'https://www.maxpremiumburgers.pl/contentassets/afbe9c5a892c41eab3b70841e9e342bd/product_cheeseburger.jpg', 
-        [new Ingredient('Meat' , 1),
-         new Ingredient('French Fries', 20)]),
-        new Recipe('Burger', 
-        'Anoother test', 
-        'https://www.maxpremiumburgers.pl/contentassets/afbe9c5a892c41eab3b70841e9e342bd/product_cheeseburger.jpg', 
-        [new Ingredient('Buns' , 2),
-        new Ingredient('Meat', 1)])
-      ];
+    private recipes: Recipe[] = [];
 
       getRecipes() {
           return this.recipes.slice();
@@ -49,4 +38,9 @@ export class RecipeService {
         this.recipes.splice(index,1);
         this.recipesChanged.next(this.recipes.slice());
       }
+
+      setRecipes(recipes: Recipe[]) {
+        this.recipes = recipes;
+        this.recipesChanged.next(this.recipes.slice());
+      } 
 }
